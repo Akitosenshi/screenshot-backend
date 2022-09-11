@@ -1,6 +1,6 @@
 ## Screenshot service
 
-Die eigens gehostete pi wird folgens als Server bezeichnet
+Der eigens gehostete raspberry pi wird folgens als Server bezeichnet
 
 - sollte screenshots verarbeiten von einem eigenen server
 - screenshots sollten zum service via rest crud/anderer api an Server gesendet werden
@@ -10,7 +10,7 @@ Die eigens gehostete pi wird folgens als Server bezeichnet
 - Screenshots sollten via url aufrufbar sein
 - Server muss gegen ungenutzten zugriff geschützt sein (JWT , z.b.) / basic auth: "Header: {"Basic-Auth("Username:"admin", Password:"admin"")"}" / "Headers: "Authorization: Bearer: {eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjk5ODE5MTkxOSwicGVyc29uYWxfc2NvcGUiOjF9.V7qpdb5h_c54-IH90DQ2VDh8_-vIXMLtM97cugQ7B8w}"
 - Hochgeladene screenshots sollen vom server benannt werden (uuid muss generiert werden)
-- Screenshot muss ins clipboard als url hinterlegt werden (durch response von curl/jq geparsed und weitergegeben über clipboard programm)
+- Screenshot muss als url an den client zurueckgegeben werden (durch response von curl/jq geparsed und weitergegeben über clipboard programm)
 
 ### Fragen
 - Wie speichert der Server den screenshot

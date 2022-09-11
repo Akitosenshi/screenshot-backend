@@ -1,0 +1,21 @@
+[default]
+address = "0.0.0.0"
+secret_key = "qhGQLdEfPdnz5RibIEQa+cHia6wiw6GA6GlXD+ktz6c="
+ident = "screenshot-backend"
+
+[default.limits]
+bytes = "8 KiB"
+data-form = "2 MiB"
+file = "1 MiB"
+form = "32 KiB"
+json = "1 MiB"
+msgpack = "1 MiB"
+string = "8 KiB"
+
+[debug]
+port = 8000
+log_level = "debug"
+
+[release]
+port = 80
+log_level = "normal"
