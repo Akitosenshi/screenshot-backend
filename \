@@ -1,6 +1,6 @@
 pub mod api;
-pub mod frontend;
 
+use api::user;
 use rocket::{get, routes};
 use tera::Tera;
 use lazy_static::lazy_static;
@@ -8,7 +8,7 @@ use lazy_static::lazy_static;
 
 lazy_static! {
 	pub static ref TEMPLATES: Tera = {
-		let tera = match Tera::new("templates/**/*.html") {
+		let mut tera = match Tera::new("templates/**/*.html") {
 			Ok(t) => t,
 			Err(e) => {
 				println!("Parsing error(s): {}", e);
@@ -24,12 +24,16 @@ fn index() -> &'static str {
 	"Henlo, Wrold?"
 }
 
+#[get("/register")]
+fn register() -> String {
+	"".to_string()
+}
+
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
 	let _rocket = rocket::build()
-		.mount("/", routes![index])
-		.mount("/api", routes![api::file::upload])
-		.mount("/", routes![frontend::file::serve])
+		.mount("/", routes![index, register])
+		.mount("/api/v1", routes![api_register])
 		.launch()
 		.await?;
 	Ok(())

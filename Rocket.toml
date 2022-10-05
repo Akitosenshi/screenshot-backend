@@ -4,9 +4,9 @@ secret_key = "qhGQLdEfPdnz5RibIEQa+cHia6wiw6GA6GlXD+ktz6c="
 ident = "screenshot-backend"
 
 [default.limits]
-bytes = "8 KiB"
+bytes = "2 MiB"
 data-form = "2 MiB"
-file = "1 MiB"
+file = "1 GiB"
 form = "32 KiB"
 json = "1 MiB"
 msgpack = "1 MiB"
