@@ -6,7 +6,7 @@ ident = "screenshot-backend"
 [default.limits]
 bytes = "2 MiB"
 data-form = "2 MiB"
-file = "1 GiB"
+file = "128 MiB"
 form = "32 KiB"
 json = "1 MiB"
 msgpack = "1 MiB"
