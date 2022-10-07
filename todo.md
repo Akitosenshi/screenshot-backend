@@ -8,7 +8,7 @@ Der eigens gehostete raspberry pi wird folgens als Server bezeichnet
 ## Stories
 - Server muss gesendeten screenshot speichern
 - Screenshots sollten via url aufrufbar sein
-- Server muss gegen ungenutzten zugriff geschützt sein (JWT , z.b.) / basic auth: "Header: {"Basic-Auth("Username:"admin", Password:"admin"")"}" / "Headers: "Authorization: Bearer: {eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjk5ODE5MTkxOSwicGVyc29uYWxfc2NvcGUiOjF9.V7qpdb5h_c54-IH90DQ2VDh8_-vIXMLtM97cugQ7B8w}"
+- Server muss gegen unautorisierten zugriff geschützt sein (JWT , z.b.) / basic auth: "Header: {"Basic-Auth("Username:"admin", Password:"admin"")"}" / "Headers: "Authorization: Bearer: {eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjk5ODE5MTkxOSwicGVyc29uYWxfc2NvcGUiOjF9.V7qpdb5h_c54-IH90DQ2VDh8_-vIXMLtM97cugQ7B8w}"
 - Hochgeladene screenshots sollen vom server benannt werden (uuid muss generiert werden)
 - Screenshot muss als url an den client zurueckgegeben werden (durch response von curl/jq geparsed und weitergegeben über clipboard programm)
 
