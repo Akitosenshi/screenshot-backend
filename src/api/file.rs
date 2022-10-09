@@ -3,6 +3,9 @@ use rocket::{post, data::{Data, Limits, ToByteUnit}, tokio::io::AsyncWriteExt};
 use rocket::tokio::fs::File;
 use sha256::digest_bytes;
 
+//TODO not sure if I should do it this way
+//TODO response with helpful error messages
+
 #[post("/file", data = "<data>")]
 pub async fn upload(data: Data<'_>, limits: &Limits) -> std::io::Result<String> {
 	let mut buffer: Vec<u8> = Vec::with_capacity(limits.get("file").unwrap_or(4.mebibytes()).as_u64() as usize);
