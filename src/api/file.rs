@@ -1,24 +1,62 @@
 use magic::MagicError;
-use rocket::{post, data::{Data, Limits, ToByteUnit}, tokio::io::AsyncWriteExt};
+use rocket::{post, data::{Data, Limits, ToByteUnit}, tokio::io::AsyncWriteExt, serde::json::Json};
 use rocket::tokio::fs::File;
+use serde::Serialize;
 use sha256::digest_bytes;
 
-//TODO not sure if I should do it this way
-//TODO response with helpful error messages
+#[derive(Serialize)]
+pub struct UploadResponse {
+	status: String,
+	url: String,
+	error: String,
+}
 
 #[post("/file", data = "<data>")]
-pub async fn upload(data: Data<'_>, limits: &Limits) -> std::io::Result<String> {
+pub async fn upload(data: Data<'_>, limits: &Limits) -> Json<UploadResponse> {
 	let mut buffer: Vec<u8> = Vec::with_capacity(limits.get("file").unwrap_or(4.mebibytes()).as_u64() as usize);
-	data.open(limits.get("file").unwrap_or(4.mebibytes())).stream_to(&mut buffer).await?;
+	match data.open(limits.get("file").unwrap_or(4.mebibytes())).stream_to(&mut buffer).await {
+		Ok(_) => {},
+		Err(_) => {
+			return Json(UploadResponse {
+				status: "error".to_string(),
+				url: "".to_string(),
+				error: "error receiving data".to_string()
+			});
+		}
+	}
 
 	let name = digest_bytes(&buffer);
 	let ext = get_ext(&buffer).await.unwrap_or("".to_string());
 	//TODO make path configurable
 	let path = format!("{}/{}.{}", "/tmp/screenshot", name, ext);
 
-	File::create(path).await?.write_all(&buffer).await?;
+	match File::create(path).await {
+		Ok(mut file) => {
+			match file.write_all(&buffer).await {
+				Ok(_) => {},
+				Err(_) => {
+					return Json(UploadResponse {
+						status: "error".to_string(),
+						url: "".to_string(),
+						error: "error while saving file".to_string()
+					});
+				}
+			}
+		},
+		Err(_) => {
+			return Json(UploadResponse {
+				status: "error".to_string(),
+				url: "".to_string(),
+				error: "error while saving file".to_string()
+			});
+		}
+	}
 
-	Ok(format!("http://localhost:8000/files/{name}.{ext}"))
+	Json(UploadResponse {
+		status: "ok".to_string(),
+		url: format!("http://localhost:8000/files/{name}.{ext}").to_string(),
+		error: "".to_string()
+	})
 }
 
 async fn get_ext(buffer: &Vec<u8>) -> Result<String, MagicError> {
