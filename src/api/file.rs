@@ -18,15 +18,15 @@ pub async fn upload(data: Data<'_>, limits: &Limits) -> Json<UploadResponse> {
 		Ok(_) => {},
 		Err(_) => {
 			return Json(UploadResponse {
-				status: "error".to_string(),
-				url: "".to_string(),
-				error: "error receiving data".to_string()
+				status: String::from("error"),
+				url: String::from(""),
+				error: String::from("error receiving data")
 			});
 		}
 	}
 
 	let name = digest_bytes(&buffer);
-	let ext = get_ext(&buffer).await.unwrap_or("".to_string());
+	let ext = get_ext(&buffer).await.unwrap_or(String::from(""));
 	//TODO make path configurable
 	let path = format!("{}/{}.{}", "/tmp/screenshot", name, ext);
 
@@ -36,26 +36,26 @@ pub async fn upload(data: Data<'_>, limits: &Limits) -> Json<UploadResponse> {
 				Ok(_) => {},
 				Err(_) => {
 					return Json(UploadResponse {
-						status: "error".to_string(),
-						url: "".to_string(),
-						error: "error while saving file".to_string()
+						status: String::from("error"),
+						url: String::from(""),
+						error: String::from("error while saving file")
 					});
 				}
 			}
 		},
 		Err(_) => {
 			return Json(UploadResponse {
-				status: "error".to_string(),
-				url: "".to_string(),
-				error: "error while saving file".to_string()
+				status: String::from("error"),
+				url: String::from(""),
+				error: String::from("error while saving file")
 			});
 		}
 	}
 
 	Json(UploadResponse {
-		status: "ok".to_string(),
-		url: format!("http://localhost:8000/files/{name}.{ext}").to_string(),
-		error: "".to_string()
+		status: String::from("ok"),
+		url: String::from(format!("http://localhost:8000/files/{name}.{ext}")),
+		error: String::from("")
 	})
 }
 
@@ -64,5 +64,5 @@ async fn get_ext(buffer: &Vec<u8>) -> Result<String, MagicError> {
 	cookie.load::<&str>(&[])?;
 	let tmp = cookie.buffer(&buffer)?;
 	let ext = tmp.split('/').filter(|ext| ext.len() <= 3).next().unwrap_or("");
-	Ok(ext.to_string())
+	Ok(String::from(ext))
 }
