@@ -9,8 +9,9 @@ pub struct UploadResponse {
 	error: String,
 }
 
-async fn upload(test: &str) -> String {
-	format!("test: {}", test)
+pub async fn upload(ctx: &str) -> String {
+// |conf| async move { format!("config: {}", conf) }
+	format!("ctx: {:?}", ctx)
 }
 
 //pub async fn upload(data: Data<'_>, limits: &Limits) -> Json<UploadResponse> {
