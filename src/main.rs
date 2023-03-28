@@ -1,24 +1,24 @@
-pub mod api;
-pub mod frontend;
+use std::sync::{Arc, RwLock};
 
-use warp::Filter;
+use config::Config;
 
-use crate::api::file;
-
+// mod api;
+mod config;
 
 #[tokio::main]
 async fn main() {
-	let ctx = "cum";
-	let api = warp::path("api").and(warp::any().map(move || ctx.clone()));
-	let file_upload = warp::post()
-		.and(api)
-		.and(warp::path("file"))
-		.and(warp::path::end())
-		.then(file::upload);
+    let config = Arc::new(RwLock::new(Config::new("./config.json")));
+    // let file = File::open()
 
-	let routes = warp::any().and(
-		file_upload
-	);
+    // let config = Arc::new(RwLock::new(Config::new()))
+    // let api = warp::path("api").and(warp::any().map(move || config.clone()));
+    // let file_upload = warp::post()
+    //     .and(api)
+    //     .and(warp::path("file"))
+    //     .and(warp::path::end())
+    //     .then(file::upload);
 
-	warp::serve(routes).run(([127, 0, 0, 1], 8080)).await;
+    // let routes = warp::any().and(file_upload);
+
+    // warp::serve(routes);
 }
